@@ -1,0 +1,38 @@
+Contexto: Se realizara una mejora en la toma de asistencia para aprendices dentro de Sofia Plus, con el objetivo principal de reducir el tiempo de esta actividad.
+
+---
+
+Requerimientos_Funcionales
+
+
+RF_01 : El sistema debe permitir el ingreso del instructor al modulo de asistencia de la ficha correspondiente.
+
+RF_02 : El sistema debe mostrar una plantilla de asistencia con el listado de los aprendices matriculados en la ficha.
+
+RF_03 : La plantilla debe contar con una casilla de selección para registrar a los aprendices que no asistieron a la formación.
+
+RF_04 : El sistema debe permitir registrar una observación para cada aprendiz inasistente cuando sea necesario.
+
+RF_05 : El sistema debe permitir adjuntar un archivo como soporte de la observación realizada con anterioridad (Excusa medica - incapacidad - permiso ...).
+
+RF_06 : El sistema debe permitir modificar la selección de un aprendiz antes de guardar el reporte de inasistencias.
+
+RF_07 : Al finalizar el llamado a lista, el instructor debe poder guardar el reporte de inasistencias.
+
+RF_08 : El sistema deberá registrar automáticamente la hora y fecha en la que se realiza el reporte.
+
+RF_09 : El sistema reportara solo la información de los aprendices inasistentes.
+.
+RF_10 : Los aprendices que no estén en el reporte subido al sistema serán marcados como asistentes .
+
+RF_11 : el sistema debe tener un apartado de consulta y seguimiento de aprendices.
+
+RF_12 : El sistema debe tener un modificador de observaciones, inasistencias ya echas.
+
+
+---
+
+Diagrama de caso de usos
+
+  
+         
