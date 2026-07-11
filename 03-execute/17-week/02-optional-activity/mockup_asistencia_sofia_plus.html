@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo de Asistencia · Sofia Plus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sena-green:#39A900;
+    --sena-green-dark:#237000;
+    --sena-green-pale:#EAF6E2;
+    --coral:#D6503C;
+    --coral-pale:#FBEAE6;
+    --ink:#1C2B1E;
+    --muted:#6B7268;
+    --paper:#FBFBF8;
+    --card:#FFFFFF;
+    --line:#E1E4DC;
+    --radius-sm:6px;
+    --radius-md:10px;
+    --radius-lg:16px;
+    --shadow-sm:0 1px 2px rgba(28,43,30,.06);
+    --shadow-md:0 6px 20px rgba(28,43,30,.10);
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit;}
+
+  /* ---------- Topbar ---------- */
+  .topbar{
+    background:var(--sena-green);
+    color:#fff;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .topbar-left{display:flex; flex-direction:column; gap:2px;}
+  .brand-row{display:flex; align-items:center; gap:10px;}
+  .brand-name{font-family:var(--font-display); font-weight:700; font-size:16px; letter-spacing:.01em;}
+  .prototype-badge{
+    font-size:10.5px; background:rgba(255,255,255,.18); padding:3px 9px;
+    border-radius:999px; letter-spacing:.03em; font-weight:600;
+  }
+  .breadcrumb{font-size:12.5px; opacity:.88;}
+  .topbar-right{display:flex; align-items:center; gap:14px;}
+  .clock{
+    font-family:var(--font-mono); font-size:12.5px;
+    background:rgba(255,255,255,.15); padding:6px 10px; border-radius:8px;
+    white-space:nowrap;
+  }
+  .instructor{display:flex; align-items:center; gap:8px; font-size:13.5px;}
+  .instructor .avatar-topbar{
+    width:28px;height:28px;border-radius:50%;background:#fff;color:var(--sena-green-dark);
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11.5px;
+    font-family:var(--font-display); flex-shrink:0;
+  }
+
+  /* ---------- Layout ---------- */
+  .container{max-width:920px; margin:0 auto; padding:24px 20px 130px;}
+
+  .module-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:18px 24px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:14px; box-shadow:var(--shadow-sm); margin-bottom:22px;
+  }
+  .module-card h1{font-family:var(--font-display); font-size:20px; margin:0 0 6px;}
+  .module-meta{display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--muted);}
+  .module-meta strong{color:var(--ink);}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex; gap:2px; border-bottom:2px solid var(--line); margin-bottom:18px;}
+  .tab-btn{
+    font-family:var(--font-display); font-size:14.5px; font-weight:600; background:none;
+    border:none; padding:10px 16px; cursor:pointer; color:var(--muted);
+    border-bottom:2px solid transparent; margin-bottom:-2px; transition:color .2s;
+  }
+  .tab-btn.active{color:var(--sena-green-dark); border-bottom-color:var(--sena-green);}
+  .tab-btn .badge{
+    font-family:var(--font-body); font-size:11px; background:var(--sena-green-pale);
+    color:var(--sena-green-dark); padding:2px 6px; border-radius:999px; margin-left:6px;
+  }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:14px;}
+  .search-input{
+    flex:1; min-width:220px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius-md); font-family:var(--font-body); font-size:13.5px; background:#fff;
+  }
+  .search-input:focus-visible{outline:2px solid var(--sena-green); outline-offset:1px;}
+  .counts{display:flex; gap:8px;}
+  .count-pill{font-size:11.5px; padding:5px 10px; border-radius:999px; font-weight:600; white-space:nowrap;}
+  .count-pill.total{background:#EFF1EC; color:var(--muted);}
+  .count-pill.absent{background:var(--coral-pale); color:var(--coral);}
+
+  /* ---------- Learner rows ---------- */
+  .learner-list{display:flex; flex-direction:column; gap:10px;}
+  .learner-row{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:14px 16px; transition:border-color .2s, background .2s;
+  }
+  .learner-row.is-absent{border-color:#F0C6BB; background:var(--coral-pale);}
+  .learner-main{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;background:var(--sena-green-pale);
+    color:var(--sena-green-dark); display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:12.5px; font-family:var(--font-display); flex-shrink:0;
+  }
+  .avatar-sm{width:26px;height:26px;font-size:10.5px;}
+
+  .name-wrap{position:relative; display:inline-block; flex:1; min-width:150px;}
+  .name-text{position:relative; z-index:1; font-weight:600; font-size:14.5px;}
+  .circle-mark{
+    position:absolute; top:-60%; left:-10%; width:120%; height:220%;
+    overflow:visible; pointer-events:none; transform:rotate(-1.5deg);
+  }
+  .circle-mark path{
+    fill:none; stroke:var(--coral); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:800; stroke-dashoffset:800; transition:stroke-dashoffset .6s ease;
+  }
+  .circle-mark.circled path{stroke-dashoffset:0;}
+  @media (prefers-reduced-motion:reduce){ .circle-mark path{transition:none;} }
+
+  .doc{font-family:var(--font-mono); font-size:11.5px; color:var(--muted); white-space:nowrap;}
+
+  .switch{display:flex; align-items:center; gap:8px; cursor:pointer; margin-left:auto; user-select:none; position:relative;}
+  .switch-input{position:absolute; opacity:0; width:1px; height:1px;}
+  .switch-track{width:38px; height:22px; background:#D8DBD3; border-radius:999px; position:relative; transition:background .2s; flex-shrink:0;}
+  .switch-thumb{position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; box-shadow:var(--shadow-sm); transition:left .2s;}
+  .switch-input:checked + .switch-track{background:var(--coral);}
+  .switch-input:checked + .switch-track .switch-thumb{left:18px;}
+  .switch-input:focus-visible + .switch-track{outline:2px solid var(--sena-green); outline-offset:2px;}
+  .switch-label{font-size:12px; font-weight:600; color:var(--muted); min-width:64px;}
+
+  .learner-expand{margin-top:12px; padding-top:12px; border-top:1px dashed #E7BEB0; display:flex; gap:16px; flex-wrap:wrap;}
+  .field{flex:1; min-width:220px;}
+  .field-label{display:block; font-size:11.5px; color:var(--muted); margin-bottom:4px; font-weight:600;}
+  .obs-input{
+    width:100%; min-height:58px; border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:8px 10px; font-family:var(--font-body); font-size:13px; resize:vertical;
+  }
+  .obs-input:focus-visible{outline:2px solid var(--sena-green);}
+  .field-file{display:flex; align-items:flex-end;}
+  .file-hidden{display:none;}
+  .btn-file{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-sm);
+    padding:8px 12px; font-size:12.5px; cursor:pointer; color:var(--ink); white-space:nowrap;
+  }
+  .btn-file:hover{border-color:var(--sena-green);}
+  .file-chip{
+    display:inline-flex; align-items:center; gap:6px; background:#fff; border:1px solid var(--line);
+    border-radius:999px; padding:6px 10px; font-size:12px;
+  }
+  .file-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;line-height:1;padding:0;}
+  .file-remove:hover{color:var(--coral);}
+
+  .empty-row{padding:32px; text-align:center; color:var(--muted); font-size:13.5px;}
+
+  /* ---------- Save bar ---------- */
+  .save-bar{
+    position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--line);
+    padding:14px 24px; display:flex; justify-content:space-between; align-items:center;
+    gap:16px; flex-wrap:wrap; box-shadow:0 -4px 16px rgba(28,43,30,.06); z-index:20;
+  }
+  .save-summary{font-size:13px;}
+  .save-timestamp{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:2px;}
+  .btn-save{
+    background:var(--sena-green); color:#fff; border:none; padding:12px 22px; border-radius:var(--radius-md);
+    font-family:var(--font-display); font-weight:600; font-size:14px; cursor:pointer;
+    transition:background .2s, transform .1s; flex-shrink:0;
+  }
+  .btn-save:hover{background:var(--sena-green-dark);}
+  .btn-save:active{transform:scale(.98);}
+
+  .toast{
+    position:fixed; bottom:88px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:#fff; padding:12px 20px; border-radius:var(--radius-md);
+    font-size:13px; opacity:0; pointer-events:none; transition:opacity .25s, transform .25s;
+    z-index:30; box-shadow:var(--shadow-md); max-width:90vw; text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Reports tab ---------- */
+  .empty-state{text-align:center; padding:56px 20px; color:var(--muted);}
+  .empty-icon{font-size:30px; margin-bottom:10px;}
+  .empty-state p{margin:4px 0; font-size:13.5px;}
+  .reports-list{display:flex; flex-direction:column; gap:12px;}
+  .report-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden;}
+  .report-header{
+    width:100%; background:none; border:none; padding:14px 18px; display:flex;
+    justify-content:space-between; align-items:center; cursor:pointer; text-align:left; font-family:var(--font-body);
+  }
+  .report-header-main{display:flex; flex-direction:column; gap:2px;}
+  .report-date{font-weight:600; font-size:14px;}
+  .report-time{font-size:11.5px; color:var(--muted); font-family:var(--font-mono);}
+  .report-header-stats{display:flex; align-items:center; gap:8px;}
+  .stat-pill{font-size:11px; padding:4px 9px; border-radius:999px; font-weight:600; white-space:nowrap;}
+  .stat-absent{background:var(--coral-pale); color:var(--coral);}
+  .stat-present{background:var(--sena-green-pale); color:var(--sena-green-dark);}
+  .chevron{transition:transform .2s; color:var(--muted); font-size:13px;}
+  .chevron.open{transform:rotate(180deg);}
+  .report-body{border-top:1px solid var(--line); padding:14px 18px; display:flex; flex-direction:column; gap:12px;}
+  .report-entry{padding:12px; background:var(--paper); border-radius:var(--radius-sm); border:1px solid var(--line);}
+  .entry-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .entry-name{display:flex; gap:10px; align-items:center;}
+  .entry-name-text{font-weight:600; font-size:13px;}
+  .entry-doc{font-size:11px; color:var(--muted); font-family:var(--font-mono);}
+  .entry-actions{display:flex; gap:6px; flex-shrink:0;}
+  .icon-btn{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-sm); width:28px; height:28px;
+    cursor:pointer; font-size:12.5px; display:flex; align-items:center; justify-content:center;
+  }
+  .icon-btn:hover{border-color:var(--sena-green);}
+  .entry-obs{margin-top:8px;}
+  .obs-readonly{font-size:12.5px; margin:0; color:var(--ink); line-height:1.5;}
+  .entry-file{margin-top:8px;}
+  .muted{color:var(--muted);}
+  .small{font-size:11.5px;}
+
+  @media (max-width:640px){
+    .container{padding:16px 14px 150px;}
+    .module-card{flex-direction:column; align-items:flex-start;}
+    .switch{margin-left:0;}
+    .switch-label{min-width:auto;}
+    .save-bar{flex-direction:column; align-items:stretch; text-align:center;}
+    .topbar{padding:12px 16px;}
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="brand-row">
+        <span class="brand-name">Sofia Plus</span>
+        <span class="prototype-badge">Prototipo interactivo</span>
+      </div>
+      <span class="breadcrumb">Formación profesional › Ficha 3413974 › Asistencia</span>
+    </div>
+    <div class="topbar-right">
+      <span class="clock mono" id="liveClock">—</span>
+      <div class="instructor">
+        <span class="avatar-topbar">DM</span>
+        <span>Diana Martínez · Instructora</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <div class="module-card">
+      <div>
+        <h1>Módulo de asistencia</h1>
+        <div class="module-meta">
+          <span>Ficha <strong>3413974</strong></span>
+          <span>Tecnología en Análisis y Desarrollo de Software</span>
+          <span>Ambiente <strong>305 · Bloque C</strong></span>
+          <span>Jornada <strong>Mixta</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button type="button" class="tab-btn active" id="tabBtnTomar" onclick="switchTab('tomar')">Tomar asistencia</button>
+      <button type="button" class="tab-btn" id="tabBtnConsultar" onclick="switchTab('consultar')">
+        Consultar y hacer seguimiento<span class="badge" id="reportsTabBadge" style="display:none;"></span>
+      </button>
+    </div>
+
+    <!-- TAB: TOMAR ASISTENCIA -->
+    <div id="tab-tomar">
+      <div class="toolbar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar aprendiz por nombre o número de documento" oninput="renderLearnerList(this.value)">
+        <div class="counts">
+          <span class="count-pill total" id="countTotal">12 aprendices</span>
+          <span class="count-pill absent" id="countAbsent">0 inasistencias</span>
+        </div>
+      </div>
+
+      <div class="learner-list" id="learnerList"></div>
+    </div>
+
+    <!-- TAB: CONSULTAR Y SEGUIMIENTO -->
+    <div id="tab-consultar" style="display:none;">
+      <div class="reports-list" id="reportsList"></div>
+    </div>
+
+  </div>
+
+  <div class="save-bar" id="saveBar">
+    <div>
+      <div class="save-summary" id="summaryText">Todos los aprendices quedarán como <strong>asistentes</strong>.</div>
+      <div class="save-timestamp" id="saveTimestampPreview">Se guardará con la fecha y hora actual</div>
+    </div>
+    <button type="button" class="btn-save" onclick="saveReport()">Guardar reporte de inasistencias</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+  // ---------- Datos de aprendices (ficha 3413974) ----------
+  const learners = [
+    {id:1, name:"Laura Fernanda Rojas Perdomo", doc:"1075632145"},
+    {id:2, name:"Andrés Felipe Cabrera Ortiz", doc:"1075894213"},
+    {id:3, name:"Juan Sebastián Medina Trujillo", doc:"1075321987"},
+    {id:4, name:"María José Perdomo Losada", doc:"1075674521"},
+    {id:5, name:"Camilo Andrés Trujillo Vargas", doc:"1075129384"},
+    {id:6, name:"Valentina Losada Cortés", doc:"1075987412"},
+    {id:7, name:"Santiago Cortés Bermúdez", doc:"1075456789"},
+    {id:8, name:"Daniela Ximena Polanía Rojas", doc:"1075213456"},
+    {id:9, name:"Cristian Camilo Vargas Chávez", doc:"1075765432"},
+    {id:10, name:"Natalia Andrea Bermúdez Guzmán", doc:"1075345678"},
+    {id:11, name:"Kevin Steven Guzmán Rojas", doc:"1075890123"},
+    {id:12, name:"Paula Andrea Chávez Medina", doc:"1075567890"}
+  ];
+
+  let currentAttendance = {};
+  let reports = [];
+  let editingKey = null;
+
+  function initAttendance(){
+    learners.forEach(l => { currentAttendance[l.id] = {absent:false, obs:'', file:null}; });
+  }
+
+  function esc(str){
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function normalize(str){
+    return String(str).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  }
+  function initialsOf(name){
+    const parts = name.trim().split(/\s+/);
+    return ((parts[0]?.[0]||'') + (parts[1]?.[0]||'')).toUpperCase();
+  }
+
+  // ---------- Reloj ----------
+  function tickClock(){
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('es-CO', {day:'2-digit', month:'short', year:'numeric'});
+    const timeStr = now.toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    document.getElementById('liveClock').textContent = `${dateStr} · ${timeStr}`;
+  }
+
+  // ---------- Tabs ----------
+  function switchTab(tab){
+    document.getElementById('tab-tomar').style.display = tab === 'tomar' ? 'block' : 'none';
+    document.getElementById('tab-consultar').style.display = tab === 'consultar' ? 'block' : 'none';
+    document.getElementById('tabBtnTomar').classList.toggle('active', tab === 'tomar');
+    document.getElementById('tabBtnConsultar').classList.toggle('active', tab === 'consultar');
+    document.getElementById('saveBar').style.display = tab === 'tomar' ? 'flex' : 'none';
+  }
+
+  // ---------- Lista de aprendices ----------
+  function renderLearnerList(filter=''){
+    const container = document.getElementById('learnerList');
+    const q = normalize(filter);
+    const filtered = learners.filter(l => normalize(l.name).includes(q) || l.doc.includes(filter.trim()));
+
+    if(filtered.length === 0){
+      container.innerHTML = `<div class="empty-row">No encontramos aprendices que coincidan con "${esc(filter)}".</div>`;
+    } else {
+      container.innerHTML = filtered.map(renderRow).join('');
+    }
+    updateCounts();
+  }
+
+  function renderRow(l){
+    const a = currentAttendance[l.id];
+    return `
+    <div class="learner-row ${a.absent ? 'is-absent' : ''}">
+      <div class="learner-main">
+        <div class="avatar">${initialsOf(l.name)}</div>
+        <div class="name-wrap">
+          <span class="name-text">${esc(l.name)}</span>
+          <svg class="circle-mark ${a.absent ? 'circled' : ''}" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M10,32 C6,10 60,2 100,4 C145,2 196,8 190,30 C196,52 140,58 100,56 C55,60 4,54 10,32 Z" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+        <span class="doc">CC ${l.doc}</span>
+        <label class="switch">
+          <input type="checkbox" class="switch-input" ${a.absent ? 'checked' : ''} onchange="toggleAbsence(${l.id})" aria-label="Marcar inasistencia de ${esc(l.name)}">
+          <span class="switch-track"><span class="switch-thumb"></span></span>
+          <span class="switch-label">${a.absent ? 'Inasistente' : 'Presente'}</span>
+        </label>
+      </div>
+      ${a.absent ? renderExpand(l, a) : ''}
+    </div>`;
+  }
+
+  function renderExpand(l, a){
+    return `
+    <div class="learner-expand">
+      <div class="field">
+        <label class="field-label" for="obs-${l.id}">Observación (opcional)</label>
+        <textarea id="obs-${l.id}" class="obs-input" placeholder="Ej: incapacidad médica, permiso, calamidad doméstica..." oninput="updateObs(${l.id}, this.value)">${esc(a.obs)}</textarea>
+      </div>
+      <div class="field-file">
+        <input type="file" id="file-${l.id}" class="file-hidden" onchange="handleFileSelect(${l.id}, this)">
+        ${a.file
+          ? `<span class="file-chip">📄 ${esc(a.file)}<button type="button" class="file-remove" onclick="removeFile(${l.id})" aria-label="Quitar archivo">×</button></span>`
+          : `<button type="button" class="btn-file" onclick="document.getElementById('file-${l.id}').click()">📎 Adjuntar soporte</button>`}
+      </div>
+    </div>`;
+  }
+
+  function toggleAbsence(id){
+    const a = currentAttendance[id];
+    a.absent = !a.absent;
+    if(!a.absent){ a.obs = ''; a.file = null; }
+    renderLearnerList(document.getElementById('searchInput').value);
+  }
+
+  function updateObs(id, value){
+    currentAttendance[id].obs = value; // sin re-render para no perder el foco
+  }
+
+  function handleFileSelect(id, inputEl){
+    const f = inputEl.files[0];
+    if(f){
+      currentAttendance[id].file = f.name;
+      renderLearnerList(document.getElementById('searchInput').value);
+    }
+  }
+
+  function removeFile(id){
+    currentAttendance[id].file = null;
+    renderLearnerList(document.getElementById('searchInput').value);
+  }
+
+  function updateCounts(){
+    const total = learners.length;
+    const absentCount = learners.filter(l => currentAttendance[l.id].absent).length;
+    const presentCount = total - absentCount;
+
+    document.getElementById('countTotal').textContent = `${total} aprendices`;
+    document.getElementById('countAbsent').textContent = `${absentCount} inasistencia${absentCount === 1 ? '' : 's'}`;
+
+    document.getElementById('summaryText').innerHTML = absentCount === 0
+      ? `Todos los aprendices quedarán como <strong>asistentes</strong>.`
+      : `Vas a registrar <strong>${absentCount} inasistencia${absentCount === 1 ? '' : 's'}</strong>. Los otros <strong>${presentCount}</strong> quedarán como asistentes.`;
+  }
+
+  // ---------- Guardar reporte ----------
+  function saveReport(){
+    const entries = learners
+      .filter(l => currentAttendance[l.id].absent)
+      .map(l => ({
+        learnerId: l.id,
+        name: l.name,
+        doc: l.doc,
+        obs: currentAttendance[l.id].obs,
+        file: currentAttendance[l.id].file
+      }));
+
+    const now = new Date();
+    const report = {
+      id: Date.now(),
+      dateStr: now.toLocaleDateString('es-CO', {day:'2-digit', month:'long', year:'numeric'}),
+      timeStr: now.toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit'}),
+      entries,
+      totalLearners: learners.length,
+      expanded: true
+    };
+    reports.unshift(report);
+
+    initAttendance();
+    document.getElementById('searchInput').value = '';
+    renderLearnerList('');
+    renderReports();
+    updateReportsTabBadge();
+    showToast(`✓ Reporte guardado — ${report.dateStr}, ${report.timeStr}`);
+  }
+
+  function updateReportsTabBadge(){
+    const badge = document.getElementById('reportsTabBadge');
+    if(reports.length > 0){
+      badge.style.display = 'inline';
+      badge.textContent = reports.length;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // ---------- Consultar y seguimiento ----------
+  function renderReports(){
+    const container = document.getElementById('reportsList');
+    if(reports.length === 0){
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🗂️</div>
+          <p>Todavía no hay reportes guardados.</p>
+          <p class="muted">Cuando guardes una asistencia en la pestaña <strong>Tomar asistencia</strong>, aparecerá aquí para consultarla o corregirla.</p>
+        </div>`;
+      return;
+    }
+    container.innerHTML = reports.map(renderReportCard).join('');
+  }
+
+  function renderReportCard(r){
+    const presentCount = r.totalLearners - r.entries.length;
+    return `
+    <div class="report-card">
+      <button type="button" class="report-header" onclick="toggleReportExpand(${r.id})" aria-expanded="${r.expanded}">
+        <div class="report-header-main">
+          <span class="report-date">${r.dateStr}</span>
+          <span class="report-time">${r.timeStr}</span>
+        </div>
+        <div class="report-header-stats">
+          <span class="stat-pill stat-absent">${r.entries.length} inasistencia${r.entries.length === 1 ? '' : 's'}</span>
+          <span class="stat-pill stat-present">${presentCount} asistentes</span>
+          <span class="chevron ${r.expanded ? 'open' : ''}">▾</span>
+        </div>
+      </button>
+      ${r.expanded ? renderReportBody(r) : ''}
+    </div>`;
+  }
+
+  function renderReportBody(r){
+    if(r.entries.length === 0){
+      return `<div class="report-body"><p class="muted small">No se registraron inasistencias en este reporte. Todos los aprendices asistieron.</p></div>`;
+    }
+    return `<div class="report-body">${r.entries.map(e => renderReportEntry(r.id, e)).join('')}</div>`;
+  }
+
+  function renderReportEntry(reportId, e){
+    const key = `${reportId}-${e.learnerId}`;
+    const isEditing = editingKey === key;
+    return `
+    <div class="report-entry">
+      <div class="entry-top">
+        <div class="entry-name">
+          <span class="avatar avatar-sm">${initialsOf(e.name)}</span>
+          <div>
+            <div class="entry-name-text">${esc(e.name)}</div>
+            <div class="entry-doc">CC ${e.doc}</div>
+          </div>
+        </div>
+        <div class="entry-actions">
+          <button type="button" class="icon-btn" title="Editar observación" onclick="toggleEditEntry(${reportId}, ${e.learnerId})">✏️</button>
+          <button type="button" class="icon-btn" title="Marcar como asistió (corregir inasistencia)" onclick="markAsAttended(${reportId}, ${e.learnerId})">✓</button>
+        </div>
+      </div>
+      <div class="entry-obs">
+        ${isEditing
+          ? `<textarea class="obs-input" oninput="updateEntryObs(${reportId}, ${e.learnerId}, this.value)" onblur="finishEditEntry()">${esc(e.obs)}</textarea>`
+          : `<p class="obs-readonly">${e.obs ? esc(e.obs) : '<span class="muted">Sin observación</span>'}</p>`}
+      </div>
+      <div class="entry-file">
+        ${e.file
+          ? `<span class="file-chip">📄 ${esc(e.file)}<button type="button" class="file-remove" onclick="removeEntryFile(${reportId}, ${e.learnerId})" aria-label="Quitar archivo">×</button></span>`
+          : `<span class="muted small">Sin soporte adjunto</span>`}
+      </div>
+    </div>`;
+  }
+
+  function toggleReportExpand(id){
+    const r = reports.find(rep => rep.id === id);
+    r.expanded = !r.expanded;
+    renderReports();
+  }
+
+  function toggleEditEntry(reportId, learnerId){
+    const key = `${reportId}-${learnerId}`;
+    editingKey = editingKey === key ? null : key;
+    renderReports();
+  }
+
+  function finishEditEntry(){
+    editingKey = null;
+    renderReports();
+    showToast('✓ Cambios guardados');
+  }
+
+  function updateEntryObs(reportId, learnerId, value){
+    const r = reports.find(rep => rep.id === reportId);
+    const e = r.entries.find(en => en.learnerId === learnerId);
+    e.obs = value; // sin re-render para no perder el foco
+  }
+
+  function markAsAttended(reportId, learnerId){
+    const r = reports.find(rep => rep.id === reportId);
+    r.entries = r.entries.filter(en => en.learnerId !== learnerId);
+    renderReports();
+    showToast('✓ Aprendiz marcado como asistente');
+  }
+
+  function removeEntryFile(reportId, learnerId){
+    const r = reports.find(rep => rep.id === reportId);
+    const e = r.entries.find(en => en.learnerId === learnerId);
+    e.file = null;
+    renderReports();
+  }
+
+  // ---------- Toast ----------
+  let toastTimer = null;
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // ---------- Init ----------
+  initAttendance();
+  renderLearnerList('');
+  renderReports();
+  updateReportsTabBadge();
+  tickClock();
+  setInterval(tickClock, 1000);
+</script>
+</body>
+</html>
