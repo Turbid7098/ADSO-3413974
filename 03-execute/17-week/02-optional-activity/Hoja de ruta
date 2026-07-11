@@ -1,0 +1,96 @@
+# Hoja de Ruta del Proyecto
+## Sistema de Asistencia para Aprendices SENA
+
+**Objetivo:** Desarrollar un sistema de control de asistencia mediante reconocimiento facial con cámaras de profundidad y verificación por huella dactilar, enfocado en minimizar el fraude y garantizar la autenticidad del registro, y agilizar el proceso de asistencia.
+
+---
+
+## Alcance
+
+- Registro y autenticación de aprendices.
+- Control de asistencia para instructores.
+- Administración de usuarios, cursos y reportes.
+- Verificación biométrica de alta confiabilidad.
+- Generación de evidencias y auditoría.
+
+---
+
+## Hoja de Ruta
+
+1. **Análisis:** Levantamiento de requisitos y riesgos.
+2. **Diseño:** Arquitectura, base de datos, interfaz y biometría.
+3. **Adquisición:** Compra de cámaras de profundidad y lectores.
+4. **Desarrollo:** Módulos de administración, instructor y asistencia.
+5. **Integración:** Conexión de biometría, BD y reportes.
+6. **Pruebas:** Pruebas funcionales, seguridad y fraude.
+7. **Piloto:** Implementación con un grupo de aprendices.
+8. **Despliegue:** Puesta en producción y capacitación.
+9. **Mantenimiento:** Correcciones y mejoras continuas.
+
+---
+
+## Requisitos Funcionales (RF)
+
+| # | Código | Descripción |
+|---|--------|-------------|
+| 1 | RF01 | Registrar aprendices con datos personales y ficha. |
+| 2 | RF02 | Registrar instructores. |
+| 3 | RF03 | Administrar programas, fichas y ambientes. |
+| 4 | RF04 | Registrar biometría facial usando cámara con sensor de profundidad. |
+| 5 | RF05 | Registrar huella dactilar del aprendiz. |
+| 6 | RF06 | Verificar asistencia mediante reconocimiento facial. |
+| 7 | RF07 | Solicitar segunda verificación con huella cuando exista baja confianza. |
+| 8 | RF08 | Detectar intentos de fraude mediante fotografías, videos o pantallas usando información de profundidad. |
+| 9 | RF09 | Rechazar registros biométricos duplicados. |
+| 10 | RF10 | Evitar múltiples registros del mismo aprendiz en una jornada. |
+| 11 | RF11 | Registrar fecha, hora y ambiente. |
+| 12 | RF12 | Permitir al instructor visualizar asistencia en tiempo real. |
+| 13 | RF13 | Permitir justificar inasistencias con soportes. |
+| 14 | RF14 | Generar reportes diarios, semanales y mensuales. |
+| 15 | RF15 | Exportar reportes a PDF y Excel. |
+| 16 | RF16 | Mantener bitácora de auditoría de acciones administrativas. |
+| 17 | RF17 | Gestionar usuarios y roles (Administrador e Instructor). |
+| 18 | RF18 | Notificar intentos de fraude al administrador. |
+| 19 | RF19 | Permitir búsqueda de registros históricos. |
+| 20 | RF20 | Realizar copias de seguridad automáticas. |
+| 21 | RF21 | Cifrar la información biométrica almacenada. |
+| 22 | RF22 | Registrar estadísticas de asistencia y eventos de seguridad. |
+
+---
+
+## Roles
+
+### Administrador
+- Gestiona usuarios, fichas, programas y configuraciones.
+- Consulta auditorías y reportes.
+- Atiende alertas de fraude.
+
+### Instructor
+- Visualiza asistencia.
+- Consulta reportes de su ficha.
+- Registra observaciones y justificaciones.
+
+---
+
+## Presupuesto Estimado (Económico)
+
+| Elemento | Cant. | Valor Unit. (COP) | Subtotal (COP) |
+|----------|-------|--------------------|-----------------|
+| Cámara RGB-D (sensor de profundidad) tipo Orbbec Dabai/Femto Lite o similar | 1 | $1,200,000 | $1,200,000 |
+| Lector de huella USB básico seguro | 1 | $180,000 | $180,000 |
+| Computador (si no existe) | 1 | $3,000,000 | $3,000,000 |
+| Licencias (software libre) | 1 | $0 | $0 |
+| Cableado e instalación | 1 | $150,000 | $150,000 |
+| Imprevistos | 1 | $300,000 | $300,000 |
+| **Total estimado** | | | **$4,830,000 COP** |
+
+> **Nota:** Si el equipo ya existe, el costo del proyecto se reduce aproximadamente a $1,830,000 COP.
+
+---
+
+## Resultados Esperados
+
+- Reducción significativa del fraude por suplantación.
+- Mayor confiabilidad en la asistencia.
+- Evidencia verificable para auditorías.
+- Gestión centralizada para administradores e instructores.
