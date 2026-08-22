@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_bpmn15" targetNamespace="http://sena.edu.co/bpmn/bpmn15">
+  <bpmn:collaboration id="Collaboration_bpmn15">
+    <bpmn:participant id="Pool_bpmn15" name="Auditoria" processRef="Process_bpmn15"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_bpmn15" name="Auditoria" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_bpmn15">
+      <bpmn:lane id="Lane_bpmn15_0" name="Soporte (ADMIN_STAFF)">
+        <bpmn:flowNodeRef>s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_bpmn15_1" name="Sistema">
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s1" name="Necesidad de consultar auditoria"><bpmn:outgoing>Flow_bpmn15_0</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:task id="t1" name="Filtrar registros de auditoria"><bpmn:incoming>Flow_bpmn15_0</bpmn:incoming><bpmn:outgoing>Flow_bpmn15_1</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t2" name="Presentar listado de eventos"><bpmn:incoming>Flow_bpmn15_1</bpmn:incoming><bpmn:outgoing>Flow_bpmn15_2</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t3" name="Ver detalle de un evento"><bpmn:incoming>Flow_bpmn15_2</bpmn:incoming><bpmn:outgoing>Flow_bpmn15_3</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="e1" name="Auditoria consultada"><bpmn:incoming>Flow_bpmn15_3</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_bpmn15_0" sourceRef="s1" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_bpmn15_1" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_bpmn15_2" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_bpmn15_3" sourceRef="t3" targetRef="e1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_bpmn15">
+    <bpmndi:BPMNPlane id="Plane_bpmn15" bpmnElement="Collaboration_bpmn15">
+      <bpmndi:BPMNShape id="Pool_bpmn15_di" bpmnElement="Pool_bpmn15" isHorizontal="true">
+        <omgdc:Bounds x="60" y="30" width="1040" height="430"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn15_0_di" bpmnElement="Lane_bpmn15_0" isHorizontal="true">
+        <omgdc:Bounds x="90" y="30" width="1010" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn15_1_di" bpmnElement="Lane_bpmn15_1" isHorizontal="true">
+        <omgdc:Bounds x="90" y="235" width="1010" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s1_di" bpmnElement="s1">
+        <omgdc:Bounds x="182.0" y="70.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1">
+        <omgdc:Bounds x="310.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2">
+        <omgdc:Bounds x="485.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3">
+        <omgdc:Bounds x="660.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1">
+        <omgdc:Bounds x="882.0" y="275.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_bpmn15_0_di" bpmnElement="Flow_bpmn15_0">
+        <omgdi:waypoint x="218.0" y="88.0"/>
+        <omgdi:waypoint x="310.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn15_1_di" bpmnElement="Flow_bpmn15_1">
+        <omgdi:waypoint x="440.0" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="293.0"/>
+        <omgdi:waypoint x="485.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn15_2_di" bpmnElement="Flow_bpmn15_2">
+        <omgdi:waypoint x="615.0" y="293.0"/>
+        <omgdi:waypoint x="637.5" y="293.0"/>
+        <omgdi:waypoint x="637.5" y="88.0"/>
+        <omgdi:waypoint x="660.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn15_3_di" bpmnElement="Flow_bpmn15_3">
+        <omgdi:waypoint x="790.0" y="88.0"/>
+        <omgdi:waypoint x="836.0" y="88.0"/>
+        <omgdi:waypoint x="836.0" y="293.0"/>
+        <omgdi:waypoint x="882.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

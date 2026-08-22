@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_bpmn06" targetNamespace="http://sena.edu.co/bpmn/bpmn06">
+  <bpmn:collaboration id="Collaboration_bpmn06">
+    <bpmn:participant id="Pool_bpmn06" name="Consulta de horario" processRef="Process_bpmn06"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_bpmn06" name="Consulta de horario" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_bpmn06">
+      <bpmn:lane id="Lane_bpmn06_0" name="Usuario (Instructor / Aprendiz)">
+        <bpmn:flowNodeRef>s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_bpmn06_1" name="Sistema">
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s1" name="Necesidad de consultar horario"><bpmn:outgoing>Flow_bpmn06_0</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:task id="t1" name="Seleccionar semana a consultar"><bpmn:incoming>Flow_bpmn06_0</bpmn:incoming><bpmn:outgoing>Flow_bpmn06_1</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t2" name="Validar alcance de acceso (ficha propia)"><bpmn:incoming>Flow_bpmn06_1</bpmn:incoming><bpmn:outgoing>Flow_bpmn06_2</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t3" name="Obtener sesiones de la semana"><bpmn:incoming>Flow_bpmn06_2</bpmn:incoming><bpmn:outgoing>Flow_bpmn06_3</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t4" name="Seleccionar sesion para ver detalle"><bpmn:incoming>Flow_bpmn06_3</bpmn:incoming><bpmn:outgoing>Flow_bpmn06_4</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t5" name="Presentar detalle de la sesion"><bpmn:incoming>Flow_bpmn06_4</bpmn:incoming><bpmn:outgoing>Flow_bpmn06_5</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="e1" name="Horario consultado"><bpmn:incoming>Flow_bpmn06_5</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_bpmn06_0" sourceRef="s1" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_bpmn06_1" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_bpmn06_2" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_bpmn06_3" sourceRef="t3" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_bpmn06_4" sourceRef="t4" targetRef="t5"/>
+    <bpmn:sequenceFlow id="Flow_bpmn06_5" sourceRef="t5" targetRef="e1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_bpmn06">
+    <bpmndi:BPMNPlane id="Plane_bpmn06" bpmnElement="Collaboration_bpmn06">
+      <bpmndi:BPMNShape id="Pool_bpmn06_di" bpmnElement="Pool_bpmn06" isHorizontal="true">
+        <omgdc:Bounds x="60" y="30" width="1390" height="430"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn06_0_di" bpmnElement="Lane_bpmn06_0" isHorizontal="true">
+        <omgdc:Bounds x="90" y="30" width="1360" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn06_1_di" bpmnElement="Lane_bpmn06_1" isHorizontal="true">
+        <omgdc:Bounds x="90" y="235" width="1360" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s1_di" bpmnElement="s1">
+        <omgdc:Bounds x="182.0" y="70.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1">
+        <omgdc:Bounds x="310.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2">
+        <omgdc:Bounds x="485.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3">
+        <omgdc:Bounds x="660.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4">
+        <omgdc:Bounds x="835.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5">
+        <omgdc:Bounds x="1010.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1">
+        <omgdc:Bounds x="1232.0" y="275.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_0_di" bpmnElement="Flow_bpmn06_0">
+        <omgdi:waypoint x="218.0" y="88.0"/>
+        <omgdi:waypoint x="310.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_1_di" bpmnElement="Flow_bpmn06_1">
+        <omgdi:waypoint x="440.0" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="293.0"/>
+        <omgdi:waypoint x="485.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_2_di" bpmnElement="Flow_bpmn06_2">
+        <omgdi:waypoint x="615.0" y="293.0"/>
+        <omgdi:waypoint x="660.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_3_di" bpmnElement="Flow_bpmn06_3">
+        <omgdi:waypoint x="790.0" y="293.0"/>
+        <omgdi:waypoint x="812.5" y="293.0"/>
+        <omgdi:waypoint x="812.5" y="88.0"/>
+        <omgdi:waypoint x="835.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_4_di" bpmnElement="Flow_bpmn06_4">
+        <omgdi:waypoint x="965.0" y="88.0"/>
+        <omgdi:waypoint x="987.5" y="88.0"/>
+        <omgdi:waypoint x="987.5" y="293.0"/>
+        <omgdi:waypoint x="1010.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn06_5_di" bpmnElement="Flow_bpmn06_5">
+        <omgdi:waypoint x="1140.0" y="293.0"/>
+        <omgdi:waypoint x="1232.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_bpmn14" targetNamespace="http://sena.edu.co/bpmn/bpmn14" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:collaboration id="Collaboration_bpmn14">
+    <bpmn:participant id="Pool_bpmn14" name="Gestion documental" processRef="Process_bpmn14" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_bpmn14" name="Gestion documental" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_bpmn14">
+      <bpmn:lane id="Lane_bpmn14_1" name="Sistema">
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>g1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_bpmn14_0" name="Soporte (ADMIN_STAFF)">
+        <bpmn:flowNodeRef>s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s1" name="Necesidad de generar o consultar documento">
+      <bpmn:outgoing>Flow_bpmn14_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="t1" name="Seleccionar plantilla de documento">
+      <bpmn:incoming>Flow_bpmn14_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t2" name="Editar o previsualizar plantilla">
+      <bpmn:incoming>Flow_bpmn14_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t3" name="Generar documento con datos de origen">
+      <bpmn:incoming>Flow_bpmn14_2</bpmn:incoming>
+      <bpmn:incoming>Flow_bpmn14_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="t4" name="Validar datos requeridos">
+      <bpmn:incoming>Flow_bpmn14_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="g1" name="Datos completos para generar?">
+      <bpmn:incoming>Flow_bpmn14_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_bpmn14_7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="t6" name="Generar documento y registrar version">
+      <bpmn:incoming>Flow_bpmn14_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="e1" name="Documento generado">
+      <bpmn:incoming>Flow_bpmn14_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="t5" name="Informar informacion faltante">
+      <bpmn:incoming>Flow_bpmn14_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_bpmn14_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_bpmn14_0" sourceRef="s1" targetRef="t1" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_1" sourceRef="t1" targetRef="t2" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_2" sourceRef="t2" targetRef="t3" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_6" sourceRef="t5" targetRef="t3" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_3" sourceRef="t3" targetRef="t4" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_4" sourceRef="t4" targetRef="g1" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_5" name="No" sourceRef="g1" targetRef="t5" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_7" name="Si" sourceRef="g1" targetRef="t6" />
+    <bpmn:sequenceFlow id="Flow_bpmn14_8" sourceRef="t6" targetRef="e1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_bpmn14">
+    <bpmndi:BPMNPlane id="Plane_bpmn14" bpmnElement="Collaboration_bpmn14">
+      <bpmndi:BPMNShape id="Pool_bpmn14_di" bpmnElement="Pool_bpmn14" isHorizontal="true">
+        <omgdc:Bounds x="160" y="80" width="1565" height="430" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn14_1_di" bpmnElement="Lane_bpmn14_1" isHorizontal="true">
+        <omgdc:Bounds x="190" y="285" width="1535" height="205" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn14_0_di" bpmnElement="Lane_bpmn14_0" isHorizontal="true">
+        <omgdc:Bounds x="190" y="80" width="1535" height="205" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s1_di" bpmnElement="s1">
+        <omgdc:Bounds x="282" y="120" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="266" y="156" width="68" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1">
+        <omgdc:Bounds x="410" y="103" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2">
+        <omgdc:Bounds x="585" y="103" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3">
+        <omgdc:Bounds x="760" y="103" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4">
+        <omgdc:Bounds x="935" y="308" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="g1_di" bpmnElement="g1" isMarkerVisible="true">
+        <omgdc:Bounds x="1152" y="320" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1134" y="282.5" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t6_di" bpmnElement="t6">
+        <omgdc:Bounds x="1285" y="308" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1">
+        <omgdc:Bounds x="1507" y="325" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1497" y="361" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t5_di" bpmnElement="t5">
+        <omgdc:Bounds x="935" y="405" width="130" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_0_di" bpmnElement="Flow_bpmn14_0">
+        <omgdi:waypoint x="318" y="138" />
+        <omgdi:waypoint x="410" y="138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_1_di" bpmnElement="Flow_bpmn14_1">
+        <omgdi:waypoint x="540" y="138" />
+        <omgdi:waypoint x="585" y="138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_2_di" bpmnElement="Flow_bpmn14_2">
+        <omgdi:waypoint x="715" y="138" />
+        <omgdi:waypoint x="760" y="138" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_3_di" bpmnElement="Flow_bpmn14_3">
+        <omgdi:waypoint x="890" y="138" />
+        <omgdi:waypoint x="912.5" y="138" />
+        <omgdi:waypoint x="912.5" y="343" />
+        <omgdi:waypoint x="935" y="343" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_4_di" bpmnElement="Flow_bpmn14_4">
+        <omgdi:waypoint x="1065" y="343" />
+        <omgdi:waypoint x="1152" y="343" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_5_di" bpmnElement="Flow_bpmn14_5">
+        <omgdi:waypoint x="1175" y="366" />
+        <omgdi:waypoint x="1175" y="440" />
+        <omgdi:waypoint x="1065" y="440" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1183" y="394" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_6_di" bpmnElement="Flow_bpmn14_6">
+        <omgdi:waypoint x="935" y="440" />
+        <omgdi:waypoint x="825" y="440" />
+        <omgdi:waypoint x="825" y="173" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_7_di" bpmnElement="Flow_bpmn14_7">
+        <omgdi:waypoint x="1198" y="343" />
+        <omgdi:waypoint x="1285" y="343" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1237" y="318" width="10" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn14_8_di" bpmnElement="Flow_bpmn14_8">
+        <omgdi:waypoint x="1415" y="343" />
+        <omgdi:waypoint x="1507" y="343" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

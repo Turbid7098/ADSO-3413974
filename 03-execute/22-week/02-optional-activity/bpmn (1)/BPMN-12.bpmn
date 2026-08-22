@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_bpmn12" targetNamespace="http://sena.edu.co/bpmn/bpmn12">
+  <bpmn:collaboration id="Collaboration_bpmn12">
+    <bpmn:participant id="Pool_bpmn12" name="Indicadores y KPI" processRef="Process_bpmn12"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_bpmn12" name="Indicadores y KPI" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_bpmn12">
+      <bpmn:lane id="Lane_bpmn12_0" name="Director">
+        <bpmn:flowNodeRef>s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_bpmn12_1" name="Sistema">
+        <bpmn:flowNodeRef>t2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>t4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>e1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="s1" name="Necesidad de revisar indicadores"><bpmn:outgoing>Flow_bpmn12_0</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:task id="t1" name="Consultar panel de indicadores"><bpmn:incoming>Flow_bpmn12_0</bpmn:incoming><bpmn:outgoing>Flow_bpmn12_1</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t2" name="Calcular estado por ficha y KPI vs umbral"><bpmn:incoming>Flow_bpmn12_1</bpmn:incoming><bpmn:outgoing>Flow_bpmn12_2</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t3" name="Seleccionar KPI para ver detalle"><bpmn:incoming>Flow_bpmn12_2</bpmn:incoming><bpmn:outgoing>Flow_bpmn12_3</bpmn:outgoing></bpmn:task>
+    <bpmn:task id="t4" name="Presentar tendencia historica del KPI"><bpmn:incoming>Flow_bpmn12_3</bpmn:incoming><bpmn:outgoing>Flow_bpmn12_4</bpmn:outgoing></bpmn:task>
+    <bpmn:endEvent id="e1" name="Indicadores consultados"><bpmn:incoming>Flow_bpmn12_4</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_bpmn12_0" sourceRef="s1" targetRef="t1"/>
+    <bpmn:sequenceFlow id="Flow_bpmn12_1" sourceRef="t1" targetRef="t2"/>
+    <bpmn:sequenceFlow id="Flow_bpmn12_2" sourceRef="t2" targetRef="t3"/>
+    <bpmn:sequenceFlow id="Flow_bpmn12_3" sourceRef="t3" targetRef="t4"/>
+    <bpmn:sequenceFlow id="Flow_bpmn12_4" sourceRef="t4" targetRef="e1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_bpmn12">
+    <bpmndi:BPMNPlane id="Plane_bpmn12" bpmnElement="Collaboration_bpmn12">
+      <bpmndi:BPMNShape id="Pool_bpmn12_di" bpmnElement="Pool_bpmn12" isHorizontal="true">
+        <omgdc:Bounds x="60" y="30" width="1215" height="430"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn12_0_di" bpmnElement="Lane_bpmn12_0" isHorizontal="true">
+        <omgdc:Bounds x="90" y="30" width="1185" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_bpmn12_1_di" bpmnElement="Lane_bpmn12_1" isHorizontal="true">
+        <omgdc:Bounds x="90" y="235" width="1185" height="205"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="s1_di" bpmnElement="s1">
+        <omgdc:Bounds x="182.0" y="70.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t1_di" bpmnElement="t1">
+        <omgdc:Bounds x="310.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t2_di" bpmnElement="t2">
+        <omgdc:Bounds x="485.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t3_di" bpmnElement="t3">
+        <omgdc:Bounds x="660.0" y="53.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="t4_di" bpmnElement="t4">
+        <omgdc:Bounds x="835.0" y="258.0" width="130" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="e1_di" bpmnElement="e1">
+        <omgdc:Bounds x="1057.0" y="275.0" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_bpmn12_0_di" bpmnElement="Flow_bpmn12_0">
+        <omgdi:waypoint x="218.0" y="88.0"/>
+        <omgdi:waypoint x="310.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn12_1_di" bpmnElement="Flow_bpmn12_1">
+        <omgdi:waypoint x="440.0" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="88.0"/>
+        <omgdi:waypoint x="462.5" y="293.0"/>
+        <omgdi:waypoint x="485.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn12_2_di" bpmnElement="Flow_bpmn12_2">
+        <omgdi:waypoint x="615.0" y="293.0"/>
+        <omgdi:waypoint x="637.5" y="293.0"/>
+        <omgdi:waypoint x="637.5" y="88.0"/>
+        <omgdi:waypoint x="660.0" y="88.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn12_3_di" bpmnElement="Flow_bpmn12_3">
+        <omgdi:waypoint x="790.0" y="88.0"/>
+        <omgdi:waypoint x="812.5" y="88.0"/>
+        <omgdi:waypoint x="812.5" y="293.0"/>
+        <omgdi:waypoint x="835.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_bpmn12_4_di" bpmnElement="Flow_bpmn12_4">
+        <omgdi:waypoint x="965.0" y="293.0"/>
+        <omgdi:waypoint x="1057.0" y="293.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
